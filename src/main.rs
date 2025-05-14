@@ -5,7 +5,7 @@ use std::thread;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 fn main() -> Result<(), String> {
-
+    // --- parse CLI args ---
     let mut args = std::env::args().skip(1);
     let mut file_arg: Option<String> = None;
     let mut workers: Option<usize> = None;
@@ -13,150 +13,150 @@ fn main() -> Result<(), String> {
     let mut retries: Option<u32> = None;
     let mut urls: Vec<String> = Vec::new();
 
-    while let Some(arg) = args.next(){
-        match arg.as_str(){
+    while let Some(arg) = args.next() {
+        match arg.as_str() {
             "--file" => {
                 let path = args.next().ok_or("Expecting file path after --file")?;
                 file_arg = Some(path);
             }
             "--workers" => {
-                let w_str = args.next().ok_or("Expected number after -workers")?;
-                file_arg = Some(path);
+                let w = args.next().ok_or("Expected number after --workers")?;
+                workers = Some(w.parse::<usize>().map_err(|e| e.to_string())?);
             }
             "--timeout" => {
-                let t_str = args.next().ok_or("Expected number after --timeout")?;
-                timeout_secs = Some(t_str.parse().map_err(|e| e.to_string())?);
+                let t = args.next().ok_or("Expected number after --timeout")?;
+                timeout_secs = Some(t.parse::<u64>().map_err(|e| e.to_string())?);
             }
             "--retries" => {
-                let r_str = args.next().ok_or("Expected number after --retries")?;
-                retries = Some(r_str.parse().map_err(|e| e.to_string())?);
+                let r = args.next().ok_or("Expected number after --retries")?;
+                retries = Some(r.parse::<u32>().map_err(|e| e.to_string())?);
             }
             other => {
-                if other.starts_with('-'){
-                    return Err(format!("Unknown arguement: {}", other));
+                if other.starts_with('-') {
+                    return Err(format!("Unknown argument: {}", other));
                 }
-                urls.push(other);
+                urls.push(other.to_string());
             }
         }
     }
 
-    if let Some(path) = file_arg{
+    // --- load URLs from file if given ---
+    if let Some(path) = file_arg {
         let f = File::open(&path)
             .map_err(|e| format!("Failed to open file {}: {}", path, e))?;
-        for line in BufReader::new(f).lines(){
-            let line = line.map_err(|e| format!("Error reading file {}: {}", path, e))?;
+        for line in BufReader::new(f).lines() {
+            let line = line.map_err(|e| format!("Error reading {}: {}", path, e))?;
             let t = line.trim();
-            if t.is_empty() || t.starts_with('#'){ continue; }
+            if t.is_empty() || t.starts_with('#') { continue }
             urls.push(t.to_string());
         }
     }
 
-    if urls.is_empty(){
-        return Err("No URLS provided".into());
+    if urls.is_empty() {
+        return Err("No URLs provided".into());
     }
 
+    // --- config ---
     let num_workers = workers.unwrap_or_else(|| {
         std::thread::available_parallelism().map(|n| n.get()).unwrap_or(1)
     });
     let timeout = Duration::from_secs(timeout_secs.unwrap_or(5));
     let max_retries = retries.unwrap_or(0);
 
+    // --- HTTP client ---
     let client = reqwest::blocking::Client::builder()
         .timeout(timeout)
         .build()
-        .map_err(|e| format!("Failed to build HTTP client: {}", e))?;
+        .map_err(|e| format!("Failed to build client: {}", e))?;
     let client = Arc::new(client);
 
+    // --- channels ---
     let (task_tx, task_rx) = mpsc::channel::<String>();
-    let (task_tx, task_rx) = mpsc::channel::<(String, Option<u16>, Option<String>, u128, u128)>();
-
+    let (result_tx, result_rx) =
+        mpsc::channel::<(String, Option<u16>, Option<String>, u128, u128)>();
     let task_rx = Arc::new(Mutex::new(task_rx));
 
+    // --- spawn workers ---
     let mut handles = Vec::new();
-    for _ in 0..num_workers{
+    for _ in 0..num_workers {
         let task_rx = Arc::clone(&task_rx);
         let result_tx = result_tx.clone();
         let client = Arc::clone(&client);
 
         handles.push(thread::spawn(move || {
-            while letOk(url) = task_rx.lock().unwrap().recv() {
+            while let Ok(url) = task_rx.lock().unwrap().recv() {
                 let start = Instant::now();
-                let mut status_code = None;
-                let mut error_msg = None;
+                let mut status = None;
+                let mut error = None;
 
-                for attempt in 0..=max_retries {
+                for i in 0..=max_retries {
                     match client.get(&url).send() {
-                        Ok(resp) => {
-                            status_code = Some(resp.status().as_u16());
+                        Ok(r) => {
+                            status = Some(r.status().as_u16());
                             break;
                         }
-                        Err(e) if attempt < max_entries => {
+                        Err(_e) if i < max_retries => {
                             thread::sleep(Duration::from_millis(100));
-                            } Err(e) {
-                                error_msg = Some(e.to_string());
-                            }
+                        }
+                        Err(e) => {
+                            error = Some(e.to_string());
                         }
                     }
+                }
 
                 let elapsed_ms = start.elapsed().as_millis();
-                let timestamp = SystemTime::now()
+                let ts = SystemTime::now()
                     .duration_since(UNIX_EPOCH)
                     .unwrap_or_default()
                     .as_secs() as u128;
 
-                let _ = result_tx.send((url.clone(), status_code, error_msg, elapsed_ms, timestamp));
-
+                let _ = result_tx.send((url.clone(), status, error, elapsed_ms, ts));
             }
         }));
     }
-
     drop(result_tx);
 
-    for url in urls {
-        task_tx.send(url).map_err(|e| e.to_string())?;
+    // --- send tasks ---
+    for u in urls {
+        task_tx.send(u).map_err(|e| e.to_string())?;
     }
     drop(task_tx);
 
-    let mut results: Vec::new();
-    for (url, status, err, elapsed_ms, timestamp) in result_rx {
-        if let Some(code) = status {
-            println!("{} - status: {} - time: {}ms", url, code, elapsed_ms);
+    // --- collect & print ---
+    let mut results: Vec<(String, Option<u16>, Option<String>, u128, u128)> = Vec::new();
+    for (url, st, err, ms, ts) in result_rx {
+        if let Some(code) = st {
+            println!("{} – status: {} – time: {}ms", url, code, ms);
         } else if let Some(e) = &err {
-            println!("{} - error: {} - time: {}ms", url, e, elapsed_ms);
-        } 
-        results.push((url, status, err, elapsed_ms, timestamp));
+            println!("{} – error: {} – time: {}ms", url, e, ms);
+        }
+        results.push((url, st, err, ms, ts));
     }
 
+    // --- clean up threads ---
     for h in handles {
         h.join().map_err(|_| "Thread panicked".to_string())?;
     }
 
+    // --- write JSON ---
     let mut out = File::create("status.json").map_err(|e| e.to_string())?;
     writeln!(out, "[").map_err(|e| e.to_string())?;
-    for (i, (url, status, err, elapsed_ms, ts)) in results.iter().enumerate(){
-        writeln!(out, " {{").map_err(|e| e.to_string())?;
-        // let escaped_url = url.replace('\\', "\\\\").replace('\"', "\\\"");
-        writeln!(outfile, " \"url\": \"{}\",", url).map_err(|e| e.to_string())?;
-        if let Some(code) = status {
-            writeln!(out, "   \"status_code\": "{}",", code).map_err(|e| e.to_string())?;
-            writeln!(out, "   \"error\": null,").map_err(|e| e.to_string())?;
+    for (i, (url, st, err, ms, ts)) in results.iter().enumerate() {
+        writeln!(out, "  {{").map_err(|e| e.to_string())?;
+        writeln!(out, "    \"url\": \"{}\",", url).map_err(|e| e.to_string())?;
+        if let Some(code) = st {
+            writeln!(out, "    \"status_code\": {},", code).map_err(|e| e.to_string())?;
+            writeln!(out, "    \"error\": null,").map_err(|e| e.to_string())?;
         } else {
-            writeln!(out, "   \"status_code\": null,").map_err(|e| e.to_string())?;
-            let err_field = err.as_ref().map(|e| format!("\"{}\"", e)).unwrap_or_else(|| "null".into());
-            // if let Some(err) = err_opt {
-                // let escaped_err = err.replace('\\', "\\\\").replace('\"', "\\\"");
-                writeln!(out, "    \"error\": {},", err_field).map_err(|e| e.to_string())?;
-            }
-        writeln!(out, "    \"response_time_ms\": {},", elapsed_ms).map_err(|e| e.to_string())?;
+            writeln!(out, "    \"status_code\": null,").map_err(|e| e.to_string())?;
+            let efield = err.as_ref().map(|s| format!("\"{}\"", s)).unwrap_or("null".into());
+            writeln!(out, "    \"error\": {},", efield).map_err(|e| e.to_string())?;
+        }
+        writeln!(out, "    \"response_time_ms\": {},", ms).map_err(|e| e.to_string())?;
         writeln!(out, "    \"timestamp\": {}", ts).map_err(|e| e.to_string())?;
-        writeln!(out, "    }}{}", if i + 1 == results.len() {""} else {","}).map_err(|e| e.to_string())?;
-        // if i + 1 ==results.len(){
-            // writeln!(outfile, "  }}").map_err(|e| e.to_string())?;
-        // } else {
-            // writeln!(outfile, "  }},").map_err(|e| e.to_string())?;
-        // }
+        writeln!(out, "  }}{}", if i + 1 == results.len() { "" } else { "," }).map_err(|e| e.to_string())?;
     }
-    writeln!(outfile, "]").map_err(|e| e.to_string())?;
+    writeln!(out, "]").map_err(|e| e.to_string())?;
 
     Ok(())
 }

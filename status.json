@@ -1,0 +1,93 @@
+[
+  {
+    "url": "https://www.netflix.com/",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 630,
+    "timestamp": 1747251192
+  },
+  {
+    "url": "https://www.google.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 84,
+    "timestamp": 1747251192
+  },
+  {
+    "url": "https://thisurldoesnotexist12345.com",
+    "status_code": null,
+    "error": "error sending request for url (https://thisurldoesnotexist12345.com/)",
+    "response_time_ms": 33,
+    "timestamp": 1747251192
+  },
+  {
+    "url": "vnejvbejvbelvbevbefbvfjvbeksndjd.com",
+    "status_code": null,
+    "error": "builder error",
+    "response_time_ms": 0,
+    "timestamp": 1747251192
+  },
+  {
+    "url": "https://www.amazon.com/",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 184,
+    "timestamp": 1747251192
+  },
+  {
+    "url": "https://www.pinterest.com/",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 210,
+    "timestamp": 1747251193
+  },
+  {
+    "url": "https://www.youtube.com/",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 153,
+    "timestamp": 1747251193
+  },
+  {
+    "url": "https://mail.google.com/",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 358,
+    "timestamp": 1747251193
+  },
+  {
+    "url": "https://x.com/",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 143,
+    "timestamp": 1747251193
+  },
+  {
+    "url": "https://www.nasa.gov/",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 718,
+    "timestamp": 1747251194
+  },
+  {
+    "url": "thisisnotarealurldddddddd.com",
+    "status_code": null,
+    "error": "builder error",
+    "response_time_ms": 0,
+    "timestamp": 1747251194
+  },
+  {
+    "url": "https://onelook.com/",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 314,
+    "timestamp": 1747251194
+  },
+  {
+    "url": "fakefakefakefakeurlllll.com",
+    "status_code": null,
+    "error": "builder error",
+    "response_time_ms": 0,
+    "timestamp": 1747251194
+  }
+]
