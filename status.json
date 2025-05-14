@@ -1,93 +1,352 @@
 [
   {
-    "url": "https://www.netflix.com/",
-    "status_code": 200,
-    "error": null,
-    "response_time_ms": 630,
-    "timestamp": 1747251192
-  },
-  {
     "url": "https://www.google.com",
     "status_code": 200,
     "error": null,
     "response_time_ms": 84,
-    "timestamp": 1747251192
+    "timestamp": 1747255539
   },
   {
-    "url": "https://thisurldoesnotexist12345.com",
+    "url": "https://www.youtube.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 188,
+    "timestamp": 1747255539
+  },
+  {
+    "url": "https://www.facebook.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 395,
+    "timestamp": 1747255539
+  },
+  {
+    "url": "https://twitter.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 245,
+    "timestamp": 1747255539
+  },
+  {
+    "url": "https://www.instagram.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 651,
+    "timestamp": 1747255540
+  },
+  {
+    "url": "https://www.linkedin.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 186,
+    "timestamp": 1747255540
+  },
+  {
+    "url": "https://www.wikipedia.org",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 224,
+    "timestamp": 1747255541
+  },
+  {
+    "url": "https://www.amazon.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 203,
+    "timestamp": 1747255541
+  },
+  {
+    "url": "https://www.ebay.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 202,
+    "timestamp": 1747255541
+  },
+  {
+    "url": "https://thisdoesnotexist12345.com",
     "status_code": null,
-    "error": "error sending request for url (https://thisurldoesnotexist12345.com/)",
-    "response_time_ms": 33,
-    "timestamp": 1747251192
+    "error": "error sending request for url (https://thisdoesnotexist12345.com/)",
+    "response_time_ms": 138,
+    "timestamp": 1747255541
   },
   {
-    "url": "vnejvbejvbelvbevbefbvfjvbeksndjd.com",
+    "url": "https://www.reddit.com",
+    "status_code": 403,
+    "error": null,
+    "response_time_ms": 83,
+    "timestamp": 1747255541
+  },
+  {
+    "url": "https://www.microsoft.com",
     "status_code": null,
-    "error": "builder error",
-    "response_time_ms": 0,
-    "timestamp": 1747251192
+    "error": "error sending request for url (https://www.microsoft.com/)",
+    "response_time_ms": 5000,
+    "timestamp": 1747255546
   },
   {
-    "url": "https://www.amazon.com/",
+    "url": "https://www.apple.com",
     "status_code": 200,
     "error": null,
-    "response_time_ms": 184,
-    "timestamp": 1747251192
+    "response_time_ms": 69,
+    "timestamp": 1747255546
   },
   {
-    "url": "https://www.pinterest.com/",
+    "url": "https://www.github.com",
     "status_code": 200,
     "error": null,
-    "response_time_ms": 210,
-    "timestamp": 1747251193
+    "response_time_ms": 372,
+    "timestamp": 1747255547
   },
   {
-    "url": "https://www.youtube.com/",
+    "url": "https://stackoverflow.com",
+    "status_code": 403,
+    "error": null,
+    "response_time_ms": 63,
+    "timestamp": 1747255547
+  },
+  {
+    "url": "https://www.cnn.com",
     "status_code": 200,
     "error": null,
-    "response_time_ms": 153,
-    "timestamp": 1747251193
+    "response_time_ms": 92,
+    "timestamp": 1747255547
   },
   {
-    "url": "https://mail.google.com/",
+    "url": "https://www.bbc.com",
     "status_code": 200,
     "error": null,
-    "response_time_ms": 358,
-    "timestamp": 1747251193
+    "response_time_ms": 120,
+    "timestamp": 1747255547
   },
   {
-    "url": "https://x.com/",
+    "url": "https://www.nytimes.com",
     "status_code": 200,
     "error": null,
-    "response_time_ms": 143,
-    "timestamp": 1747251193
+    "response_time_ms": 124,
+    "timestamp": 1747255547
   },
   {
-    "url": "https://www.nasa.gov/",
+    "url": "https://www.theguardian.com",
     "status_code": 200,
     "error": null,
-    "response_time_ms": 718,
-    "timestamp": 1747251194
+    "response_time_ms": 203,
+    "timestamp": 1747255547
   },
   {
-    "url": "thisisnotarealurldddddddd.com",
+    "url": "https://fake-site-for-test.xyz",
     "status_code": null,
-    "error": "builder error",
-    "response_time_ms": 0,
-    "timestamp": 1747251194
+    "error": "error sending request for url (https://fake-site-for-test.xyz/)",
+    "response_time_ms": 119,
+    "timestamp": 1747255547
   },
   {
-    "url": "https://onelook.com/",
+    "url": "https://www.netflix.com",
     "status_code": 200,
     "error": null,
-    "response_time_ms": 314,
-    "timestamp": 1747251194
+    "response_time_ms": 796,
+    "timestamp": 1747255548
   },
   {
-    "url": "fakefakefakefakeurlllll.com",
+    "url": "https://www.spotify.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 661,
+    "timestamp": 1747255549
+  },
+  {
+    "url": "https://www.pinterest.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 195,
+    "timestamp": 1747255549
+  },
+  {
+    "url": "https://www.yahoo.com",
+    "status_code": 429,
+    "error": null,
+    "response_time_ms": 131,
+    "timestamp": 1747255549
+  },
+  {
+    "url": "https://www.tumblr.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 234,
+    "timestamp": 1747255549
+  },
+  {
+    "url": "https://www.quora.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 155,
+    "timestamp": 1747255549
+  },
+  {
+    "url": "https://www.airbnb.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 394,
+    "timestamp": 1747255550
+  },
+  {
+    "url": "https://www.uber.com",
+    "status_code": 406,
+    "error": null,
+    "response_time_ms": 297,
+    "timestamp": 1747255550
+  },
+  {
+    "url": "https://www.dropbox.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 144,
+    "timestamp": 1747255550
+  },
+  {
+    "url": "http://notrealwebsitex.com",
     "status_code": null,
-    "error": "builder error",
-    "response_time_ms": 0,
-    "timestamp": 1747251194
+    "error": "error sending request for url (http://notrealwebsitex.com/)",
+    "response_time_ms": 108,
+    "timestamp": 1747255550
+  },
+  {
+    "url": "https://slack.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 399,
+    "timestamp": 1747255551
+  },
+  {
+    "url": "https://bitbucket.org",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 296,
+    "timestamp": 1747255551
+  },
+  {
+    "url": "https://medium.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 173,
+    "timestamp": 1747255551
+  },
+  {
+    "url": "https://www.twitch.tv",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 68,
+    "timestamp": 1747255551
+  },
+  {
+    "url": "https://www.imdb.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 727,
+    "timestamp": 1747255552
+  },
+  {
+    "url": "https://www.walmart.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 173,
+    "timestamp": 1747255552
+  },
+  {
+    "url": "https://www.target.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 810,
+    "timestamp": 1747255553
+  },
+  {
+    "url": "https://www.forbes.com",
+    "status_code": 403,
+    "error": null,
+    "response_time_ms": 146,
+    "timestamp": 1747255553
+  },
+  {
+    "url": "https://www.bloomberg.com",
+    "status_code": 403,
+    "error": null,
+    "response_time_ms": 372,
+    "timestamp": 1747255554
+  },
+  {
+    "url": "https://ghost-domain.org",
+    "status_code": null,
+    "error": "error sending request for url (https://ghost-domain.org/)",
+    "response_time_ms": 259,
+    "timestamp": 1747255554
+  },
+  {
+    "url": "https://www.adobe.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 117,
+    "timestamp": 1747255554
+  },
+  {
+    "url": "https://www.craigslist.org",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 517,
+    "timestamp": 1747255554
+  },
+  {
+    "url": "https://wordpress.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 46,
+    "timestamp": 1747255555
+  },
+  {
+    "url": "https://soundcloud.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 427,
+    "timestamp": 1747255555
+  },
+  {
+    "url": "https://www.aliexpress.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 720,
+    "timestamp": 1747255556
+  },
+  {
+    "url": "https://www.paypal.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 805,
+    "timestamp": 1747255556
+  },
+  {
+    "url": "https://www.stripe.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 620,
+    "timestamp": 1747255557
+  },
+  {
+    "url": "https://www.kickstarter.com",
+    "status_code": 403,
+    "error": null,
+    "response_time_ms": 150,
+    "timestamp": 1747255557
+  },
+  {
+    "url": "https://www.deviantart.com",
+    "status_code": 200,
+    "error": null,
+    "response_time_ms": 468,
+    "timestamp": 1747255558
+  },
+  {
+    "url": "https://nowaythisworks.tld",
+    "status_code": null,
+    "error": "error sending request for url (https://nowaythisworks.tld/)",
+    "response_time_ms": 144,
+    "timestamp": 1747255558
   }
 ]

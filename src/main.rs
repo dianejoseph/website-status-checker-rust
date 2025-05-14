@@ -53,7 +53,7 @@ fn main() -> Result<(), String> {
     }
 
     if urls.is_empty() {
-        return Err("No URLs provided".into());
+        // return Err("No URLs provided".into());
     }
 
     // --- config ---
